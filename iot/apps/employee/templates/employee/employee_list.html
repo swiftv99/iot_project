@@ -1,0 +1,71 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+    {% for employee in employee_list %} 
+        {% for colname in employee.column_set.all %}
+            <p>{{colname}}</p>
+        {% endfor %} 
+    {% endfor %}
+
+<div class="container d-flex mt-5" style="width: 100%">
+	<div class="col">
+		<h1 class="text-center">Employees</h1>
+		<table class="table table-striped mt-5">
+			<thead>
+				<tr>
+					{% comment %}
+					<th>#</th>
+					{% endcomment %}
+					<th class="text-center" scope="col">ID</th>
+					<th class="text-center" scope="col">Email</th>
+					<th class="text-center" scope="col">First Name</th>
+					<th class="text-center" scope="col">Last Name</th>
+					<th class="text-center" scope="col">Title</th>
+					<th class="text-center" scope="col">Department</th>
+					<th class="text-center" scope="col">Room</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for employee in employee_list %}
+				<tr>
+					{% comment %}
+					<th scope="row">{{forloop.counter}}</th>
+					{% endcomment %}
+					<td class="text-center">{{employee.id}}</td>
+					<td class="text-center ml-5">
+						<a href="{% url 'employee:employee_detail' employee.id %}"
+							>{{employee.email}}</a
+						>
+					</td>
+					<td class="text-center">{{employee.first_name}}</td>
+					<td class="text-center">{{employee.last_name}}</td>
+					<td class="text-center">{{employee.title}}</td>
+					<td class="text-center">{{employee.department}}</td>
+					<td class="text-center">{{employee.room}}</td>
+					<td>
+						<a href="{% url 'employee:employee_update' employee.id %} "
+							>Update</a
+						>
+					</td>
+					<td>
+						<a href="{% url 'employee:employee_delete' employee.id %}"
+							>Delete</a
+						>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="d-flex justify-content-center">
+			<a
+				href="{% url 'employee:employee_create' %}"
+				class="d-block btn btn-primary btn-lg my-5"
+				>Add New</a
+			>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
